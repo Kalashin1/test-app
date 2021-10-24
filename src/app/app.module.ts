@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 
-import { NavbarComponent } from './components/navbar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { SearchComponent } from './components/search/search.component'
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';

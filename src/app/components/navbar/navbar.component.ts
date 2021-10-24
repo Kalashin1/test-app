@@ -9,7 +9,7 @@ export class NavbarComponent implements OnInit {
   constructor(){}
 
   ngOnInit(){
-    this.navs = ['user', 'repository', 'code']
+    this.navs = ['user', 'repository']
     console.log(this.navs)
   }
 

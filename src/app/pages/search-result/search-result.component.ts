@@ -6,7 +6,7 @@ import { QueryService } from '../../services/query.service'
   selector: 'app-results',
   template: `
     <app-navbar></app-navbar>
-    <app-search-results></app-search-results>
+    <app-search-results [users]="userNodes" [repos]="repoNodes"></app-search-results>
     <app-footer></app-footer>
   `
 })
@@ -34,13 +34,13 @@ export class SearchResultComponent implements OnInit {
     }
 
     getData(){
-      this.queryService.getUsers(this.term$).subscribe((result: any) => {
+      this.queryService.getUsers(this.term$, 10).subscribe((result: any) => {
         this.userNodes = result?.data?.search.nodes;
         this.loading = result.loading;
         this.error = result.error;
         console.log(this.userNodes)
       });
-      this.queryService.getRepos(this.term$).subscribe((result: any) => {
+      this.queryService.getRepos(this.term$, 10).subscribe((result: any) => {
         this.repoNodes = result?.data?.search.nodes;
         this.loading = result.loading;
         this.error = result.error;

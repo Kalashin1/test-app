@@ -8,38 +8,23 @@ export class QueryService {
 
   constructor(private apollo: Apollo) { }
 
-  getUsers(term: string){
+  getUsers(term: string, paginate: number){
     return this.apollo
       .watchQuery({
         query: gql`
         {
-          search(first: 5, type: USER, query: "${term}") {
+          search(first: ${paginate}, type: USER, query: "${term}") {
             userCount
             nodes {
               ... on User {
                 name
                 id
+                login
                 email
+                location
+                bio
                 url
                 avatarUrl
-                followers {
-                  totalCount
-                }
-                following {
-                  totalCount
-                }
-                starredRepositories {
-                  totalCount
-                }
-                repositories(first: 2, privacy: PUBLIC) {
-                  edges {
-                    node {
-                      id
-                      name
-                      url
-                    }
-                  }
-                }
               }
             }
           }
@@ -50,17 +35,27 @@ export class QueryService {
       .valueChanges
   }
 
-  getRepos(term: string){
+  getRepos(term: string, paginate: number){
     return this.apollo
       .watchQuery({
         query: gql`
         {
-          search(first: 5, type: REPOSITORY, query: "${term}"){
+          search(first: ${paginate}, type: REPOSITORY, query: "${term}"){
             repositoryCount,
             nodes{
               ...on Repository{
-                nameWithOwner,
-                name
+                description
+                nameWithOwner
+                stargazerCount
+                url
+                updatedAt
+                licenseInfo {
+                  name
+                }
+                primaryLanguage {
+                  color
+                  name
+                }
               }
             }
           }
