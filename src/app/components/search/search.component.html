@@ -1,0 +1,8 @@
+
+<h2 class="mt-16 md:mt-24 text-center font-bold text-gray-800 text-2xl">Search with love on Github</h2>
+<form #searchForm="ngForm" (ngSubmit)="submitForm()" class="flex flex-col md:flex-row my-8 px-4 py-8 md:px-24 md:py-20 justify-between items-center gap-2">
+  <input [(ngModel)]="searchTerm" name="searcTerm" type="text" class="md:w-4/5 w-full px-4 outline-none border-none transition py-4 rounded-xl dark:bg-gray-600 bg-gray-300" />
+  <div class="md:w-2/5 md:ml-8">
+    <button type="submit" class="md:w-1/2 w-full px-8 py-4 font-bold bg-gray-800 text-gray-200 dark:bg-gray-300 dark:text-gray-800 hover:bg-gray-700 hover:text-gray-200 shadow-md rounded-md text-center">Search</button>
+  </div>
+</form>

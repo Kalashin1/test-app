@@ -1,0 +1,42 @@
+<div class="flex md:flex-row flex-col my-12">
+  <div class="sidebar lg:w-1/3 mx-4 p-2">
+    <ul class="type border rounded border-gray-300">
+      <li *ngFor="let type of types" class="border-b flex items-center justify-between">
+        <p class="px-4 py-2 capitalize">{{ type }}</p> <div class="px-2 mx-4 text-sm text-gray-200 bg-gray-600 rounded-xl">300</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="py-2 px-8 block w-2/3">
+    <h3 class="text-3xl font-bold my-2">500 users</h3>
+    <hr />
+    <div class="container my-4">
+      <div class="px-2 flex justify-between border-b border-gray-300">
+        <div class="avatar w-14 h-14 rounded-full bg-gray-900 my-2">
+          <img />
+        </div>
+
+
+        <div class="flex flex-col justify-start w-4/5 px-4 py-2">
+          <h3 class="name font-bold text-purple-600 text-xl my-2">John Doe <span class="text-gray-600 font-normal inline-block ml-4">john-d-doe</span></h3>
+          <h3 class="text-xl my-2">Description</h3>
+          <div class="my-2 flex justify-start">
+            <h2 class="address"><address>No 32 Church Street</address></h2>
+            <h2 class="email inline-block ml-4">johndoe@gmail.com</h2>
+          </div>
+        </div>
+
+        <div>
+          <button class="bg-purple-600 text-gray-50 px-4 py-2 rounded-xl shadow">Follow</button>
+        </div>
+      </div>
+      <div class="flex justify-evenly my-4 w-1/2 ">
+        <button class="bg-purple-500 text-gray-200 py px-2 rounded cursor-pointer focus:bg-gray-300 focus:text-gray-6=700">1</button>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+

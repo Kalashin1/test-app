@@ -1,11 +1,2 @@
-<div *ngIf="loading">
-  Loading...
-</div>
-<div *ngIf="error">
-  Error :(
-</div>
-<div *ngIf="nodes" class="text-red-500">
-  <div *ngFor="let node of nodes">
-    <p>{{ node.name }}: {{ node.id }}</p>
-  </div>
-</div>
+
+<router-outlet></router-outlet>
