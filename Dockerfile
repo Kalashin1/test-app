@@ -6,7 +6,7 @@ WORKDIR /app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm i
+RUN npm install --save
 # If you are building your code for production
 
 COPY . .
