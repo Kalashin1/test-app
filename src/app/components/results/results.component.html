@@ -3,22 +3,24 @@
     <ul class="type border rounded border-gray-300">
       <li class="border-b flex items-center cursor-pointer justify-between" (click)="displayUser()">
         <p class="px-4 py-2 capitalize">users</p>
-        <div class="px-2 mx-4 text-sm text-gray-200 bg-gray-600 rounded-xl" >{{ users.length }}</div>
+        <div class="px-2 mx-4 text-sm text-gray-200 bg-gray-600 rounded-xl" >{{ userCount }}</div>
       </li>
       <li class="border-b flex items-center cursor-pointer justify-between" (click)="displayRepo()">
         <p class="px-4 py-2 capitalize">repositories</p>
-        <div class="px-2 mx-4 text-sm text-gray-200 bg-gray-600 rounded-xl">{{ repos.length }}</div>
+        <div class="px-2 mx-4 text-sm text-gray-200 bg-gray-600 rounded-xl">{{ repoCount }}</div>
       </li>
     </ul>
   </div>
 
   <div class="py-2 px-8 block lg:w-2/3">
-    <h3 class="text-3xl font-bold my-2 mb-8" *ngIf="showUser">Showing 500 Available user results</h3>
-    <h3 class="text-3xl font-bold my-2 mb-8" *ngIf="showRepo">Showing 500 Available repository results</h3>
+    <h3 class="text-3xl font-bold my-2 mb-8" *ngIf="showUser">Showing {{ userCount}} Available user results</h3>
+    <h3 class="text-3xl font-bold my-2 mb-8" *ngIf="showRepo">Showing {{ repoCount }} Available repository results</h3>
     <hr />
     <div class="container my-4">
+      <p *ngIf="loading" class="fixed md:left-1/4 left-10 justify-center items-center py-12 md:w-2/4 px-8 w-4/5 mx-auto bg-purple-600 shadow-lg text-blue text-center rounded-md text-white font-bold text-lg">Loading.... <i class="fas fa-spin fa-sync-alt inline-block ml-4"></i></p>
+      <p *ngIf="error" class="fixed md:-left-2 left-10 justify-center items-center w-4/5 md:w-2/4 py-12 px-4 mx-auto my-auto bg-red-600 shadow-lg text-blue text-center rounded-md text-white font-bold text-lg">Oops try again <i class="fas fa-exclamation-circle inline-block ml-4"></i></p>
       <div *ngIf="showRepo">
-        <div class="flex md:justify-start border-b border-gray-300 my-4 pb-8 mx-2" *ngFor="let repo of repos.slice(0, 10)">
+        <div class="flex md:justify-start border-b border-gray-300 my-4 pb-8 mx-2" *ngFor="let repo of repos">
           <div class="icon my-4">
             <span><i class="fas fa-book"></i></span>
           </div>
@@ -43,7 +45,7 @@
       </div>
 
       <div *ngIf="showUser">
-        <div class="px-2 flex justify-between items-center border-b my-2 border-gray-300" *ngFor="let user of users">
+        <div class="px-2 flex justify-between items-center border-b my-2 mx-2 border-gray-300 w-full" *ngFor="let user of users">
           <div class="w-14 h-14 my-2">
             <a [href]="user.url"><img [src]="user.avatarUrl" class="rounded-full" /></a>
           </div>
@@ -59,16 +61,21 @@
               </h2>
               <h2 class="email inline-block ml-4">{{user.email}}</h2>
             </div>
+            <div class="my-2 flex justify-start">
+              <h2 class="email inline-block ml-4">followers: <span class="inline-block ml-4">{{user.followers.totalCount}}</span></h2>
+              <h2 class="email inline-block ml-4">following: <span class="inline-block ml-4">{{user.following.totalCount}}</span></h2>
+              <h2 class="email inline-block ml-4">Repositories: <span class="inline-block ml-4">{{user.repositories.totalCount}}</span></h2>
+            </div>
           </div>
 
           <div>
-            <a [href]="user.url" class="bg-purple-600 text-gray-50 px-4 py-2 rounded-xl shadow">Visit</a>
+            <a [href]="user.url" class="bg-purple-600 text-gray-50 px-4 my-2 py-2 rounded-md shadow">Visit</a>
           </div>
         </div>
         <div class="flex justify-evenly my-4 w-1/2 py-4">
           <button
             class="bg-purple-500 text-gray-200 py px-2 rounded cursor-pointer focus:bg-gray-300 focus:text-gray-6=700"
-            *ngFor="let page of pages">{{page}}</button>
+            *ngFor="let page of pages" (click)="paginateUsers(page)">{{page}}</button>
         </div>
       </div>
 
