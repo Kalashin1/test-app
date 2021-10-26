@@ -1,19 +1,44 @@
-name: Deploy_To_Firebase
+name: Docker
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master, working ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@master
-      with:
-        node-version: '14.x'
-    - run: npm install
-    - run: npm run build
-    - uses: w9jds/firebase-action@master
-      with:
-        args: deploy --only hosting:test-app
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+    deploy:
+
+        name: Setup Gcloud Account
+        runs-on: ubuntu-latest
+        env:
+          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/test-app
+        steps:
+        - name: Checkout
+          uses: actions/checkout@master
+
+        - name: Login
+          uses: google-github-actions/setup-gcloud@master
+          with:
+            project_id: ${{ secrets.GCP_PROJECT_ID }}
+            service_account_email: ${{ secrets.GCP_EMAIL }}
+            service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+        - name: Configure Docker
+          run: gcloud auth configure-docker --quiet
+
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Build Docker image
+          run: docker build . -t $IMAGE_NAME
+
+#         - name: Test Docker image
+#           run: docker run $IMAGE_NAME
+
+        - name: Push Docker image
+          run: docker push $IMAGE_NAME
+
+        #- name: Deploy Docker image
+          #run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region us-central1 --platform managed
